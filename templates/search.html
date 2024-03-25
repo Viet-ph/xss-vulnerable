@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Search Page</title>
+    <link href="/static/styles.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="user-info">
+            Welcome, {{.Email}}! <form action="/logout" method="POST" style="display: inline;"><button
+                    type="submit">Logout</button></form>
+        </div>
+        <h1>Search Page</h1>
+        <form action="/search" method="GET">
+            <input type="text" name="query" placeholder="Search...">
+            <input type="submit" value="Search">
+        </form>
+        {{if .Query}}
+        <p>You searched for: {{.Query}}</p>
+        {{end}}
+    </div>
+</body>
+
+</html>

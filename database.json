@@ -1,0 +1,10 @@
+{
+ "chirps": {},
+ "users": {
+  "1": {
+   "email": "vietpham@gmail.com",
+   "password": "$2a$10$HSz2GiaSBX5HYg9RYVZf5uXnKQLTZ5A5.r/quK1RXzERpy/aUmqmm",
+   "id": 1
+  }
+ }
+}
