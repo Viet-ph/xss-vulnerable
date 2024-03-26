@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Comments Page</title>
-    <link href="/static/styles.css" rel="stylesheet" />
-  </head>
-  <body>
-    <div class="container">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Comments Page</title>
+  <link href="/static/styles.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <ul>
+        <li><a href="/search">Search</a></li>
+        <li><a href="/comments">Comments</a></li>
+      </ul>
+    </div>
+    <div class="content">
       <div class="user-info">
-        Welcome, {{.Username}}!
-        <form action="/logout" method="POST" style="display: inline">
-          <button type="submit">Logout</button>
-        </form>
+        Welcome, {{.Email}}! <form action="/logout" method="POST" style="display: inline;"><button
+            type="submit">Logout</button></form>
       </div>
       <h1>Comments</h1>
       <form action="/comments" method="POST">
-        <textarea
-          name="comment"
-          placeholder="Leave a comment..."
-          rows="4"
-        ></textarea>
-        <input type="submit" value="Submit" />
+        <textarea name="comment" placeholder="Leave a comment..." rows="4"></textarea>
+        <input type="submit" value="Submit">
       </form>
-      <div class="comments-list">
+      <div class="comments-list" id="comments-list">
         {{range .Comments}}
         <div class="comment">
           <p>{{.}}</p>
@@ -32,5 +35,19 @@
         {{end}}
       </div>
     </div>
-  </body>
+  </div>
+
+  <script>
+    // Automatically scroll to the bottom of the comments list
+    function scrollToBottom() {
+      var commentsList = document.getElementById('comments-list');
+      commentsList.scrollTop = commentsList.scrollHeight;
+    }
+
+    // Scroll to bottom when the page loads or new comments are added
+    window.onload = scrollToBottom;
+    window.onresize = scrollToBottom;
+  </script>
+</body>
+
 </html>

@@ -9,18 +9,26 @@
 
 <body>
     <div class="container">
-        <div class="user-info">
-            Welcome, {{.Email}}! <form action="/logout" method="POST" style="display: inline;"><button
-                    type="submit">Logout</button></form>
+        <div class="sidebar">
+            <ul>
+                <li><a href="/search">Search</a></li>
+                <li><a href="/comments">Comments</a></li>
+            </ul>
         </div>
-        <h1>Search Page</h1>
-        <form action="/search" method="GET">
-            <input type="text" name="query" placeholder="Search...">
-            <input type="submit" value="Search">
-        </form>
-        {{if .Query}}
-        <p>You searched for: {{.Query}}</p>
-        {{end}}
+        <div class="content">
+            <div class="user-info">
+                Welcome, {{.Email}}! <form action="/logout" method="POST" style="display: inline;"><button
+                        type="submit">Logout</button></form>
+            </div>
+            <h1>Search Page</h1>
+            <form action="/search" method="GET">
+                <input type="text" name="query" placeholder="Search...">
+                <input type="submit" value="Search">
+            </form>
+            {{if .Query}}
+            <p>You searched for: {{.Query}}</p>
+            {{end}}
+        </div>
     </div>
 </body>
 

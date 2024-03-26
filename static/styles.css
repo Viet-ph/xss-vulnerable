@@ -59,6 +59,7 @@ input[type="submit"]:hover,
 button:hover {
   background-color: #45a049;
 }
+
 textarea {
   width: calc(100% - 10px);
   padding: 10px;
@@ -75,10 +76,13 @@ textarea {
   margin-bottom: 10px;
   border-radius: 4px;
 }
+
 .comments-list {
   max-height: 300px;
-  overflow-y: auto; /* Enable vertical scrollbar when overflowed */
-  margin-bottom: 20px; /* Add some space below the comments section */
+  overflow-y: auto;
+  /* Enable vertical scrollbar when overflowed */
+  margin-bottom: 20px;
+  /* Add some space below the comments section */
 }
 
 /* User info and logout button */
@@ -121,4 +125,50 @@ a {
 
 a:hover {
   color: #0056b3;
+}
+
+.sidebar {
+  background-color: #333;
+  color: #fff;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  padding: 10px;
+  border-bottom: 1px solid #555;
+}
+
+.sidebar ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.sidebar ul li a:hover {
+  background-color: #555;
+}
+
+.content {
+  /* margin-left: 200px; */
+  /* Adjust to match sidebar width */
+  padding: 20px;
+}
+
+/* Adjustments for smaller screens */
+@media screen and (max-width: 600px) {
+  .sidebar {
+    width: 100px;
+  }
+
+  .content {
+    margin-left: 100px;
+  }
 }

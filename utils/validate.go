@@ -9,12 +9,9 @@ import (
 	"github.com/Viet-ph/xss-vulnerable/response"
 )
 
-func ChirpyValidateHandler(w http.ResponseWriter, r *http.Request) {
+func CommentValidateHandler(w http.ResponseWriter, r *http.Request) {
 	type parameters struct {
 		Body string `json:"body"`
-	}
-	type returnValid struct {
-		Valid bool `json:"valid"`
 	}
 	type returnCleanedBody struct {
 		CleanedBody string `json:"cleaned_body"`
@@ -33,7 +30,7 @@ func ChirpyValidateHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if len(params.Body) > 140 {
-		response.RespondWithError(w, http.StatusBadRequest, "Chirp is too long")
+		response.RespondWithError(w, http.StatusBadRequest, "Comment is too long")
 		return
 	}
 

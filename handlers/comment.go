@@ -12,6 +12,7 @@ import (
 	"github.com/Viet-ph/xss-vulnerable/database"
 	"github.com/Viet-ph/xss-vulnerable/models"
 	"github.com/Viet-ph/xss-vulnerable/response"
+	"github.com/golang-jwt/jwt/v5"
 )
 
 func CreateCommentHandler(w http.ResponseWriter, r *http.Request) {
@@ -92,7 +93,7 @@ func GetCommentById(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func CommentsHandler(w http.ResponseWriter, r *http.Request){
+func CommentsHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl, err := template.ParseFiles("templates/comment.html")
 	if err != nil {
 		fmt.Print(err)
@@ -100,19 +101,31 @@ func CommentsHandler(w http.ResponseWriter, r *http.Request){
 		return
 	}
 
+	var userEmail string
+	jwtToken, _ := r.Context().Value("token").(*jwt.Token)
+	userId, _ := ExtractIdFromToken(jwtToken)
+
 	db, err := database.Db.LoadDB()
 	if err != nil {
 		log.Printf("Error load DB to memory: %s", err)
 		return
 	}
+
+	id, _ := strconv.Atoi(userId)
+	for _, v := range db.Users {
+		if v.Id == id {
+			userEmail = v.Email
+		}
+	}
+
 	// Handle new comment submission
-    if r.Method == "POST" {
-        if err := r.ParseForm(); err != nil {
-            http.Error(w, "Failed to parse form", http.StatusBadRequest)
-            return
-        }
-        comment := r.FormValue("comment")
-        if comment != "" {
+	if r.Method == "POST" {
+		if err := r.ParseForm(); err != nil {
+			http.Error(w, "Failed to parse form", http.StatusBadRequest)
+			return
+		}
+		comment := r.FormValue("comment")
+		if comment != "" {
 			id := len(db.Comments) + 1
 			newComment := models.Comment{Id: id, Body: comment}
 			db.Comments[id] = newComment
@@ -121,21 +134,21 @@ func CommentsHandler(w http.ResponseWriter, r *http.Request){
 				log.Printf("Error write DB to disk: %s", err)
 				return
 			}
-        }
-    }
+		}
+	}
 	// Render template with comments
 	var comments []string
 	for _, v := range db.Comments {
 		comments = append(comments, v.Body)
 	}
 
-    err = tmpl.Execute(w, map[string]interface{}{
-        "Username": "User", // Replace with actual username retrieval logic
-        "Comments": comments,
-    })
+	err = tmpl.Execute(w, map[string]interface{}{
+		"Username": userEmail, // Replace with actual username retrieval logic
+		"Comments": comments,
+	})
 
-    if err != nil {
+	if err != nil {
 		fmt.Print(err)
-        http.Error(w, "Failed to execute template", http.StatusInternalServerError)
-    }
+		http.Error(w, "Failed to execute template", http.StatusInternalServerError)
+	}
 }
