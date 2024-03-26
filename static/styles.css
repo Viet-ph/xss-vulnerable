@@ -1,104 +1,124 @@
 /* Enhancing overall aesthetics */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f7f6;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    text-align: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f7f6;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
 }
 
-
 .container {
-    background-color: #ffffff;
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
 }
 
 h1 {
-    color: #102a43;
-    margin-bottom: 24px;
-    margin-right: 24px;
+  color: #102a43;
+  margin-bottom: 24px;
+  margin-right: 24px;
 }
 
 /* Styling for forms and inputs */
 form {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 input[type="text"],
 input[type="password"],
 input[type="submit"],
 button {
-    width: calc(100% - 20px);
-    padding: 12px;
-    margin: 8px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+  width: calc(100% - 20px);
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
 input[type="submit"],
 button {
-    background-color: #4CAF50;
-    color: white;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 input[type="submit"]:hover,
 button:hover {
-    background-color: #45a049;
+  background-color: #45a049;
+}
+textarea {
+  width: calc(100% - 10px);
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  display: block;
+}
+
+.comment {
+  background-color: #f9f9f9;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+.comments-list {
+  max-height: 300px;
+  overflow-y: auto; /* Enable vertical scrollbar when overflowed */
+  margin-bottom: 20px; /* Add some space below the comments section */
 }
 
 /* User info and logout button */
 .user-info {
-    background-color: #f4f7f6;
-    color: #333;
-    padding: 10px;
-    margin-bottom: 20px;
-    text-align: right;
+  background-color: #f4f7f6;
+  color: #333;
+  padding: 10px;
+  margin-bottom: 20px;
+  text-align: right;
 }
 
 .user-info button {
-    padding: 8px 15px;
-    background-color: #007bff;
-    color: white;
-    border-radius: 4px;
-    font-size: 14px;
-    line-height: 1.5;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 1.5;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .user-info button:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
 /* Additional styling */
 label {
-    display: block;
-    text-align: left;
-    margin: 0 0 5px 3px;
+  display: block;
+  text-align: left;
+  margin: 0 0 5px 3px;
 }
 
 a {
-    color: #007bff;
-    text-decoration: none;
-    transition: color 0.3s ease;
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 a:hover {
-    color: #0056b3;
+  color: #0056b3;
 }

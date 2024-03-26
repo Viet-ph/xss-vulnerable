@@ -24,7 +24,7 @@ var ApiCfg = apiConfig{
 func main() {
 	filePathRoot := "./static"
 	port := "8080"
-	dbPath := "/home/orioldes/workspace/github.com/Viet-ph/xss-vulnerable/database.json"
+	dbPath := "database.json"
 	godotenv.Load()
 	ApiCfg.JwtSecret = os.Getenv("JWT_SECRET")
 
@@ -42,15 +42,16 @@ func main() {
 
 	mux := http.NewServeMux()
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir(filePathRoot))))
-	mux.HandleFunc("POST /api/chirps", handlers.CreateChirpyHandler)
-	mux.HandleFunc("GET /api/chirps", handlers.GetAllChirpsHandler)
-	mux.HandleFunc("GET /api/chirps/{chirpID}", handlers.GetChirpyById)
+	mux.HandleFunc("POST /api/comments", handlers.CreateCommentHandler)
+	mux.HandleFunc("GET /api/comments", handlers.GetAllCommentHandler)
+	mux.HandleFunc("GET /api/comments/{commentID}", handlers.GetCommentById)
 	mux.HandleFunc("POST /api/users", handlers.CreateUserHandler)
 	mux.Handle("PUT /api/users", handlers.AuthMiddleware(http.HandlerFunc(handlers.UpdateUserHandler)))
 
 	mux.HandleFunc("/login", handlers.UserLoginHandler)
 	mux.HandleFunc("POST /logout", handlers.UserLogoutHandler)
 	mux.Handle("/search", handlers.AuthMiddleware(http.HandlerFunc(handlers.SearchHandler)))
+	mux.Handle("/comments", handlers.AuthMiddleware(http.HandlerFunc(handlers.CommentsHandler)))
 
 	corsMux := utils.MiddlewareCors(mux)
 

@@ -15,7 +15,7 @@ type DB struct {
 }
 
 type DBStructure struct {
-	Chirps map[int]models.Chirp `json:"chirps"`
+	Comments map[int]models.Comment `json:"comments"`
 	Users  map[int]models.User  `json:"users"`
 }
 
@@ -63,8 +63,10 @@ func (db *DB) LoadDB() (DBStructure, error) {
 	}
 
 	json.Unmarshal(file, &data)
-	if data.Chirps == nil {
-		data.Chirps = map[int]models.Chirp{}
+	if data.Comments == nil {
+		data.Comments = map[int]models.Comment{}
+	}
+	if data.Users == nil {
 		data.Users = map[int]models.User{}
 	}
 

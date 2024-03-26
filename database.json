@@ -1,10 +1,33 @@
 {
- "chirps": {},
- "users": {
+ "comments": {
   "1": {
-   "email": "vietpham@gmail.com",
-   "password": "$2a$10$HSz2GiaSBX5HYg9RYVZf5uXnKQLTZ5A5.r/quK1RXzERpy/aUmqmm",
+   "body": "I had something interesting for breakfast",
    "id": 1
+  },
+  "2": {
+   "body": "What about second breakfast?",
+   "id": 2
+  },
+  "3": {
+   "body": "Supper? Dinner? Do you know about those?",
+   "id": 3
+  },
+  "4": {
+   "body": "I really have no idea!!!",
+   "id": 4
+  },
+  "5": {
+   "body": "I'm about to insert someting really malicious !!!",
+   "id": 5
+  },
+  "6": {
+   "body": "This comment section is not sorted at all !!",
+   "id": 6
+  },
+  "7": {
+   "body": "Try to add another one.",
+   "id": 7
   }
- }
+ },
+ "users": {}
 }

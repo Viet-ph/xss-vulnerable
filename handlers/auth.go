@@ -11,7 +11,6 @@ import (
 	"time"
 
 	"github.com/Viet-ph/xss-vulnerable/database"
-	"github.com/Viet-ph/xss-vulnerable/response"
 
 	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
@@ -97,7 +96,7 @@ func AuthMiddleware(next http.Handler) http.Handler {
 		})
 
 		if err != nil || !token.Valid {
-			response.RespondWithError(w, http.StatusUnauthorized, "Unauthorized Access")
+			http.Redirect(w, r, "/login", http.StatusSeeOther)
 			return
 		}
 

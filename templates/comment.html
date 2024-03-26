@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Comments Page</title>
+    <link href="/static/styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="user-info">
+        Welcome, {{.Username}}!
+        <form action="/logout" method="POST" style="display: inline">
+          <button type="submit">Logout</button>
+        </form>
+      </div>
+      <h1>Comments</h1>
+      <form action="/comments" method="POST">
+        <textarea
+          name="comment"
+          placeholder="Leave a comment..."
+          rows="4"
+        ></textarea>
+        <input type="submit" value="Submit" />
+      </form>
+      <div class="comments-list">
+        {{range .Comments}}
+        <div class="comment">
+          <p>{{.}}</p>
+        </div>
+        {{else}}
+        <p>No comments yet.</p>
+        {{end}}
+      </div>
+    </div>
+  </body>
+</html>
