@@ -41,7 +41,8 @@ func main() {
 	}
 
 	mux := http.NewServeMux()
-	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir(filePathRoot))))
+	//mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir(filePathRoot))))
+	mux.Handle("/", http.FileServer(http.Dir(filePathRoot)))
 	mux.HandleFunc("POST /api/comments", handlers.CreateCommentHandler)
 	mux.HandleFunc("GET /api/comments", handlers.GetAllCommentHandler)
 	mux.HandleFunc("GET /api/comments/{commentID}", handlers.GetCommentById)

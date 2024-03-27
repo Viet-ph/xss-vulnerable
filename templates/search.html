@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Search Page</title>
-    <link href="/static/styles.css" rel="stylesheet">
-</head>
+    <link href="styles.css" rel="stylesheet" />
+  </head>
 
-<body>
+  <body>
     <div class="container">
-        <div class="sidebar">
-            <ul>
-                <li><a href="/search">Search</a></li>
-                <li><a href="/comments">Comments</a></li>
-            </ul>
+      <div class="sidebar">
+        <ul>
+          <li><a href="/search">Search</a></li>
+          <li><a href="/comments">Comments</a></li>
+        </ul>
+      </div>
+      <div class="content">
+        <div class="user-info">
+          Welcome, {{.Email}}!
+          <form action="/logout" method="POST" style="display: inline">
+            <button type="submit">Logout</button>
+          </form>
         </div>
-        <div class="content">
-            <div class="user-info">
-                Welcome, {{.Email}}! <form action="/logout" method="POST" style="display: inline;"><button
-                        type="submit">Logout</button></form>
-            </div>
-            <h1>Search Page</h1>
-            <form action="/search" method="GET">
-                <input type="text" name="query" placeholder="Search...">
-                <input type="submit" value="Search">
-            </form>
-            {{if .Query}}
-            <p>You searched for: {{.Query}}</p>
-            {{end}}
-        </div>
+        <h1>Search Page</h1>
+        <form action="/search" method="GET">
+          <input type="text" name="query" placeholder="Search..." />
+          <input type="submit" value="Search" />
+        </form>
+        {{if .Query}}
+        <p>You searched for: {{.Query}}</p>
+        {{end}}
+      </div>
     </div>
-</body>
-
+  </body>
 </html>

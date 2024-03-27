@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
-
-	"github.com/Viet-ph/xss-vulnerable/response"
 )
 
 func CommentValidateHandler(w http.ResponseWriter, r *http.Request) {
@@ -30,7 +28,7 @@ func CommentValidateHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if len(params.Body) > 140 {
-		response.RespondWithError(w, http.StatusBadRequest, "Comment is too long")
+		RespondWithError(w, http.StatusBadRequest, "Comment is too long")
 		return
 	}
 
@@ -46,5 +44,5 @@ func CommentValidateHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	bodyDat = strings.Join(bodyDatSplit, " ")
-	response.RespondWithJSON(w, http.StatusOK, returnCleanedBody{CleanedBody: bodyDat})
+	RespondWithJSON(w, http.StatusOK, returnCleanedBody{CleanedBody: bodyDat})
 }

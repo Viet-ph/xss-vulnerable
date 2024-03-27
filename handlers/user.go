@@ -9,7 +9,7 @@ import (
 
 	"github.com/Viet-ph/xss-vulnerable/database"
 	"github.com/Viet-ph/xss-vulnerable/models"
-	"github.com/Viet-ph/xss-vulnerable/response"
+	"github.com/Viet-ph/xss-vulnerable/utils"
 	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -44,7 +44,7 @@ func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 
 	for _, v := range db.Users {
 		if v.Email == req.Email {
-			response.RespondWithError(w, http.StatusForbidden, "Email already exist")
+			utils.RespondWithError(w, http.StatusForbidden, "Email already exist")
 			return
 		}
 	}
@@ -66,7 +66,7 @@ func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response.RespondWithJSON(w, 201, res)
+	utils.RespondWithJSON(w, 201, res)
 }
 
 func GetAllUsersHandler(w http.ResponseWriter, r *http.Request) {
@@ -83,7 +83,7 @@ func GetAllUsersHandler(w http.ResponseWriter, r *http.Request) {
 
 	sort.Slice(returnSlice, func(i, j int) bool { return returnSlice[i].Id < returnSlice[j].Id })
 
-	response.RespondWithJSON(w, 200, returnSlice)
+	utils.RespondWithJSON(w, 200, returnSlice)
 }
 
 func GetUserByIdHandler(w http.ResponseWriter, r *http.Request) {
@@ -101,9 +101,9 @@ func GetUserByIdHandler(w http.ResponseWriter, r *http.Request) {
 
 	user, exist := db.Users[userId]
 	if exist {
-		response.RespondWithJSON(w, 200, user)
+		utils.RespondWithJSON(w, 200, user)
 	} else {
-		response.RespondWithError(w, http.StatusNotFound, "Cannot find Chirpy with associated ID")
+		utils.RespondWithError(w, http.StatusNotFound, "Cannot find Chirpy with associated ID")
 	}
 }
 
@@ -137,14 +137,14 @@ func UpdateUserHandler(w http.ResponseWriter, r *http.Request) {
 				// an error will be thrown if the JSON is invalid or has the wrong types
 				// any missing fields will simply have their values in the struct set to their zero value
 				log.Printf("Error decoding parameters: %s", err)
-				response.RespondWithError(w, http.StatusInternalServerError, "Error decoding request")
+				utils.RespondWithError(w, http.StatusInternalServerError, "Error decoding request")
 				return
 			}
 
 			newHashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
 			if err != nil {
 				log.Printf("Password hashing error: %s", err)
-				response.RespondWithError(w, http.StatusInternalServerError, "New password hashing error")
+				utils.RespondWithError(w, http.StatusInternalServerError, "New password hashing error")
 				return
 			}
 			v.Email = req.Email
@@ -155,13 +155,13 @@ func UpdateUserHandler(w http.ResponseWriter, r *http.Request) {
 			err = database.Db.WriteDB(db)
 			if err != nil {
 				log.Printf("Error write DB to disk: %s", err)
-				response.RespondWithError(w, http.StatusInternalServerError, "Error write DB to disk")
+				utils.RespondWithError(w, http.StatusInternalServerError, "Error write DB to disk")
 				return
 			}
 
-			response.RespondWithJSON(w, http.StatusOK, responseBody{Email: v.Email, Id: v.Id})
+			utils.RespondWithJSON(w, http.StatusOK, responseBody{Email: v.Email, Id: v.Id})
 			return
 		}
 	}
-	response.RespondWithError(w, http.StatusNotFound, "")
+	utils.RespondWithError(w, http.StatusNotFound, "")
 }

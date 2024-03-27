@@ -28,15 +28,15 @@ func SearchHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	
+	// Directly taking user input from query parameters
+	userQuery := r.URL.Query().Get("query")
+	
 	tmpl, err := template.ParseFiles("templates/search.html")
 	if err != nil {
 		http.Error(w, "Internal Server Error", 500)
 		return
 	}
-
-	// Directly taking user input from query parameters
-	userQuery := r.URL.Query().Get("query")
-
 	// Render template with user input - this is vulnerable to XSS!
 	err = tmpl.Execute(w, map[string]interface{}{
 		"Query": userQuery,

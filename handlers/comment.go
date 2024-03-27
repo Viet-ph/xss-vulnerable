@@ -11,7 +11,7 @@ import (
 
 	"github.com/Viet-ph/xss-vulnerable/database"
 	"github.com/Viet-ph/xss-vulnerable/models"
-	"github.com/Viet-ph/xss-vulnerable/response"
+	"github.com/Viet-ph/xss-vulnerable/utils"
 	"github.com/golang-jwt/jwt/v5"
 )
 
@@ -33,7 +33,7 @@ func CreateCommentHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if len(req.Body) > 140 {
-		response.RespondWithError(w, http.StatusBadRequest, "Chirp is too long")
+		utils.RespondWithError(w, http.StatusBadRequest, "Chirp is too long")
 		return
 	}
 
@@ -51,7 +51,7 @@ func CreateCommentHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error write DB to disk: %s", err)
 		return
 	}
-	response.RespondWithJSON(w, 201, newComment)
+	utils.RespondWithJSON(w, 201, newComment)
 }
 
 func GetAllCommentHandler(w http.ResponseWriter, r *http.Request) {
@@ -69,7 +69,7 @@ func GetAllCommentHandler(w http.ResponseWriter, r *http.Request) {
 
 	sort.Slice(returnSlice, func(i, j int) bool { return returnSlice[i].Id < returnSlice[j].Id })
 
-	response.RespondWithJSON(w, 200, returnSlice)
+	utils.RespondWithJSON(w, 200, returnSlice)
 }
 
 func GetCommentById(w http.ResponseWriter, r *http.Request) {
@@ -87,9 +87,9 @@ func GetCommentById(w http.ResponseWriter, r *http.Request) {
 
 	chirpy, exist := db.Comments[chirpId]
 	if exist {
-		response.RespondWithJSON(w, 200, chirpy)
+		utils.RespondWithJSON(w, 200, chirpy)
 	} else {
-		response.RespondWithError(w, http.StatusNotFound, "Cannot find Chirpy with associated ID")
+		utils.RespondWithError(w, http.StatusNotFound, "Cannot find Chirpy with associated ID")
 	}
 }
 
@@ -143,7 +143,7 @@ func CommentsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = tmpl.Execute(w, map[string]interface{}{
-		"Username": userEmail, // Replace with actual username retrieval logic
+		"Email": userEmail, // Replace with actual username retrieval logic
 		"Comments": comments,
 	})
 
