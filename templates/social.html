@@ -1,85 +1,99 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>Vulnerable Blog</title>
+    <link href="styles.css" rel="stylesheet" />
+    <script>
+      // Blog post data
+      var posts = {
+        1: {
+          title: "Introduction to Web Security",
+          content:
+            "This post covers the basics of web security, including XSS, CSRF, and SQL injection.",
+        },
+        2: {
+          title: "Exploring DOM-based XSS",
+          content:
+            "Learn about DOM-based XSS vulnerabilities and how to prevent them in your web applications.",
+        },
+        3: {
+          title: "Best Coding Practices",
+          content:
+            "Follow these coding best practices to write secure and maintainable code.",
+        },
+      };
 
-<head>
-  <title>Vulnerable Blog</title>
-  <link href="styles.css" rel="stylesheet" />
-  <script>
-    // Blog post data
-    var posts = {
-      1: {
-        title: 'Introduction to Web Security',
-        content: 'This post covers the basics of web security, including XSS, CSRF, and SQL injection.'
-      },
-      2: {
-        title: 'Exploring DOM-based XSS',
-        content: 'Learn about DOM-based XSS vulnerabilities and how to prevent them in your web applications.'
-      },
-      3: {
-        title: 'Best Coding Practices',
-        content: 'Follow these coding best practices to write secure and maintainable code.'
-      }
-    };
+      function loadContent(section) {
+        let contentContainer = document.getElementById("contentContainer");
+        contentContainer.innerHTML = "";
 
-    function loadContent(section) {
-      let contentContainer = document.getElementById('contentContainer');
-      contentContainer.innerHTML = '';
-
-      if (section === 'home') {
-        contentContainer.innerHTML = '<h2>Welcome to the Blog</h2><p>This is a static blog website.</p>';
-      } else {
-        let postHTML = '<p>Welcome to post #' + section + ' ! </p>';
-        if (posts[section]) {
-          postHTML += '<h2>' + posts[section].title + '</h2><p>' + posts[section].content + '</p>';
+        if (section === "home") {
+          contentContainer.innerHTML =
+            "<h2>Welcome to the Blog</h2><p>This is a static blog website.</p>";
+        } else {
+          let postHTML = "<p>Welcome to post #" + section + " ! </p>";
+          if (posts[section]) {
+            postHTML +=
+              "<h2>" +
+              posts[section].title +
+              "</h2><p>" +
+              posts[section].content +
+              "</p>";
+          } else {
+            postHTML += "<p>Post content not found.</p>";
+          }
+          postHTML +=
+            "<img src=assets/" + section + '.png width="300" height="300"/>';
+          contentContainer.innerHTML = postHTML;
         }
-        else {
-          postHTML += '<p>Post content not found.</p>'
-        }
-        postHTML += '<img src=assets/' + section + '.png width="300" height="300"/>';
-        contentContainer.innerHTML = postHTML;
       }
-    }
 
-    function updateURL(section) {
-      var newURL = window.location.origin + window.location.pathname + '#' + section;
-      window.history.pushState({ path: newURL }, '', newURL);
-    }
+      function updateURL(section) {
+        var newURL =
+          window.location.origin + window.location.pathname + "#" + section;
+        window.history.pushState({ path: newURL }, "", newURL);
+      }
 
-    function selectPost() {
-      var postSelect = document.getElementById('postSelect');
-      var selectedPostId = postSelect.value;
-      var section = selectedPostId ? selectedPostId : 'home';
-      loadContent(section);
-      updateURL(section);
-    }
+      function selectPost() {
+        var postSelect = document.getElementById("postSelect");
+        var selectedPostId = postSelect.value;
+        var section = selectedPostId ? selectedPostId : "home";
+        loadContent(section);
+        updateURL(section);
+      }
 
-    window.addEventListener('load', function () {
-      var section = window.location.hash.substr(1) || 'home';
-      loadContent(unescape(section));
-    });
-  </script>
-</head>
+      window.addEventListener("load", function () {
+        var section = window.location.hash.substr(1) || "home";
+        loadContent(unescape(section));
+      });
+    </script>
+  </head>
 
-<body>
-  <div class="container">
-    <div class="sidebar">
-      <ul>
-        <li><a href="/search">Search</a></li>
-        <li><a href="/comments">Comments</a></li>
-        <li><a href="/social">Social</a></li>
-      </ul>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <ul>
+          <li><a href="/search">Search</a></li>
+          <li><a href="/comments">Comments</a></li>
+          <li><a href="/social">Social</a></li>
+        </ul>
+      </div>
+      <div class="user-info">
+        Welcome, {{.Email}}!
+        <form action="/logout" method="POST" style="display: inline">
+          <button type="submit">Logout</button>
+        </form>
+      </div>
+      <h1>Vulnerable Blog</h1>
+      <a href="#home" onclick="loadContent('home'); updateURL('home');">Home</a>
+      <span> | Posts: </span>
+      <select id="postSelect" onchange="selectPost()">
+        <option value="">Select a post</option>
+        <option value="1">Introduction to Web Security</option>
+        <option value="2">Exploring DOM-based XSS</option>
+        <option value="3">Best Coding Practices</option>
+      </select>
+      <div id="contentContainer"></div>
     </div>
-    <h1>Vulnerable Blog</h1>
-    <a href="#home" onclick="loadContent('home'); updateURL('home');">Home</a>
-    <span> | Posts: </span>
-    <select id="postSelect" onchange="selectPost()">
-      <option value="">Select a post</option>
-      <option value="1">Introduction to Web Security</option>
-      <option value="2">Exploring DOM-based XSS</option>
-      <option value="3">Best Coding Practices</option>
-    </select>
-    <div id="contentContainer"></div>
-  </div>
-</body>
-
+  </body>
 </html>

@@ -53,7 +53,7 @@ func main() {
 	mux.HandleFunc("POST /logout", handlers.UserLogoutHandler)
 	mux.Handle("/search", handlers.AuthMiddleware(http.HandlerFunc(handlers.SearchHandler)))
 	mux.Handle("/comments", handlers.AuthMiddleware(http.HandlerFunc(handlers.CommentsHandler)))
-	mux.HandleFunc("/social", handlers.SocialHandler)
+	mux.Handle("/social", handlers.AuthMiddleware(http.HandlerFunc(handlers.SocialHandler)))
 
 	corsMux := utils.MiddlewareCors(mux)
 

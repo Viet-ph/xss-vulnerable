@@ -33,7 +33,7 @@ func CreateCommentHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if len(req.Body) > 140 {
-		utils.RespondWithError(w, http.StatusBadRequest, "Chirp is too long")
+		utils.RespondWithError(w, http.StatusBadRequest, "Comment is too long")
 		return
 	}
 
@@ -62,7 +62,6 @@ func GetAllCommentHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	returnSlice := make([]models.Comment, 0, len(db.Comments))
-	//returnSlice := []models.Chirp{}
 	for _, chirpy := range db.Comments {
 		returnSlice = append(returnSlice, chirpy)
 	}
@@ -101,21 +100,17 @@ func CommentsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var userEmail string
 	jwtToken, _ := r.Context().Value("token").(*jwt.Token)
-	userId, _ := ExtractIdFromToken(jwtToken)
+	userEmail, err := ExtractEmailFromToken(jwtToken)
+	if err != nil {
+		http.Error(w, "Internal Server Error", 500)
+		return
+	}
 
 	db, err := database.Db.LoadDB()
 	if err != nil {
 		log.Printf("Error load DB to memory: %s", err)
 		return
-	}
-
-	id, _ := strconv.Atoi(userId)
-	for _, v := range db.Users {
-		if v.Id == id {
-			userEmail = v.Email
-		}
 	}
 
 	// Handle new comment submission
@@ -125,6 +120,7 @@ func CommentsHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		comment := r.FormValue("comment")
+		//comment = utils.InputValidater(comment)
 		if comment != "" {
 			id := len(db.Comments) + 1
 			newComment := models.Comment{Id: id, Body: comment}
@@ -143,7 +139,7 @@ func CommentsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = tmpl.Execute(w, map[string]interface{}{
-		"Email": userEmail, // Replace with actual username retrieval logic
+		"Email": userEmail, 
 		"Comments": comments,
 	})
 

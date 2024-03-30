@@ -27,21 +27,17 @@
   "7": {
    "body": "Try to add another one.",
    "id": 7
-  },
-  "8": {
-   "body": "\u003cscript\u003ealert(document.cookie)\u003c/script\u003e",
-   "id": 8
   }
  },
  "users": {
   "1": {
-   "email": "vietpham@gmail.com",
-   "password": "$2a$10$PEqRtwDLvzDLaVxvrYt9pulcBNeXGRg.fehI0LDfTof8hl.b3gVCu",
+   "email": "naive_user@gmail.com",
+   "password": "$2a$10$YiP41oGQYrSdKhymjlbFXul/ZBlwvF.KaZLYVGcgvbQmCQQEa/7FW",
    "id": 1
   },
   "2": {
-   "email": "naive_user@gmail.com",
-   "password": "$2a$10$1ZhNQreejFnzwdAmDIWVQ.npnnMqqlOauXj.mAe.ykmLa8n4mV5uK",
+   "email": "evil_user@gmail.com",
+   "password": "$2a$10$k0QLd8TcTZMJ0/EPrX0DU.O59wp4c/BP4xLG8yUAt0UHc0J8x2tiS",
    "id": 2
   }
  }

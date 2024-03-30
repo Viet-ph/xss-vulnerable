@@ -114,3 +114,23 @@ func ExtractIdFromToken(token *jwt.Token) (string, error) {
 
 	return id, nil
 }
+
+func ExtractEmailFromToken(token *jwt.Token) (string, error){
+	var userEmail string
+	userId, _ := ExtractIdFromToken(token)
+
+	db, err := database.Db.LoadDB()
+	if err != nil {
+		log.Printf("Error load DB to memory: %s", err)
+		return "", err
+	}
+
+	id, _ := strconv.Atoi(userId)
+	for _, v := range db.Users {
+		if v.Id == id {
+			userEmail = v.Email
+		}
+	}
+
+	return userEmail, nil
+}
